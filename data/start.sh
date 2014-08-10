@@ -1,0 +1,1 @@
+mongod --dbpath /Users/akramarev/Projects/AgileReportServer/data/db

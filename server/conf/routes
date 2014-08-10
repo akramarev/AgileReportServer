@@ -7,3 +7,6 @@ GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET     /api/1.1/report/:id         controllers.Report.Get(id)
+GET     /api/1.1/reports            controllers.Reports.Get()
