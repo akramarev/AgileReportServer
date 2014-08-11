@@ -4,7 +4,7 @@ import assets.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Entity;
-import controllers.MorphiaObject;
+import assets.MorphiaObject;
 import org.bson.types.ObjectId;
 
 import java.util.Date;

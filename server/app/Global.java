@@ -3,7 +3,7 @@ import java.net.UnknownHostException;
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
 
-import controllers.MorphiaObject;
+import assets.MorphiaObject;
 import play.GlobalSettings;
 import play.Logger;
 

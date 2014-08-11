@@ -1,10 +1,10 @@
 package models;
 
+import assets.MorphiaObject;
 import assets.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Entity;
-import controllers.MorphiaObject;
+import com.google.code.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
@@ -18,9 +18,10 @@ public class UserModel
     public ObjectId id;
 
     public String email;
+    public String firstName;
+    public String lastName;
 
-    @JsonSerialize(using = ObjectIdSerializer.class)
-    public ObjectId companyId;
+    public CompanyModel company;
 
     @play.data.format.Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date dateCreatedUtc;

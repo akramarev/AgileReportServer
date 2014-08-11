@@ -1,8 +1,18 @@
 var report = 
 {
-	/*_id: 'asdasd',*/
-	companyId: ObjectId("53e5efcfb59f97de723a3526"),
-	userId: ObjectId("53e5f052b59f97de723a3527"),
+	//_id: '53e5f052b59f97de723a3527'
+	user = 
+	{
+		_id: ObjectId("53e5f052b59f97de723a3527"),
+		company: 
+		{
+			_id: ObjectId("53e8e7f7aeded062518b8848"),
+			name: "Contoso"
+		},
+		email: 'kramarew@gmail.com',
+		firstName: "Andrew",
+		lastName: "Kramarev",
+	}
 	status: 'Draft',
 	dateCreatedUtc: '08/02/2014',
 	dateUpdatedUtc: '08/02/2014',

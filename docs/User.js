@@ -1,11 +1,20 @@
 var user = 
 {
-	_id: ObjectId("53e5f052b59f97de723a3527"),
-	companyId: ObjectId("53e5efcfb59f97de723a3526"),
+	//_id: ObjectId("53e8e868aeded062518b8849"),
+	company: 
+	{
+		_id: ObjectId("53e8e7f7aeded062518b8848"),
+		name: "Contoso"
+	},
 	email: 'kramarew@gmail.com',
+	firstName: "Andrew",
+	lastName: "Kramarev",
 	dateCreatedUtc: '08/02/2014',
-	passwordHash: '4c2209f9f3924d31102bd84a',
-	passwordSalt: '209f9f392'
+	password:
+	{
+		passwordHash: '4c2209f9f3924d31102bd84a',
+		passwordSalt: '209f9f392'
+	}
 }
 
 //db.users.insert(user)
