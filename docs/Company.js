@@ -4,5 +4,4 @@ var company =
 	name: "Contoso",
 	dateCreatedUtc: '08/02/2014'
 }
-
 //db.companies.insert(company)
