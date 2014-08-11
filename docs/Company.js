@@ -4,5 +4,4 @@ var company =
 	Name: 'kramarew@gmail.com',
 	dateCreatedUtc: '08/02/2014'
 }
-
 //db.companies.insert(company)
