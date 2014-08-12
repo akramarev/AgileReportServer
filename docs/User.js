@@ -14,7 +14,11 @@ var user =
 	{
 		passwordHash: '4c2209f9f3924d31102bd84a',
 		passwordSalt: '209f9f392'
-	}
+	},
+	roles:
+	[
+		'Administrator'
+	]
 }
 
 //db.users.insert(user)

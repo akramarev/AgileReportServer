@@ -1,9 +1,9 @@
 var report = 
 {
 	//_id: '53e5f052b59f97de723a3527'
-	user = 
+	user:
 	{
-		_id: ObjectId("53e5f052b59f97de723a3527"),
+		_id: ObjectId("53e8e868aeded062518b8849"),
 		company: 
 		{
 			_id: ObjectId("53e8e7f7aeded062518b8848"),
@@ -11,21 +11,21 @@ var report =
 		},
 		email: 'kramarew@gmail.com',
 		firstName: "Andrew",
-		lastName: "Kramarev",
-	}
+		lastName: "Kramarev"
+	},
 	status: 'Draft',
 	dateCreatedUtc: '08/02/2014',
 	dateUpdatedUtc: '08/02/2014',
 	dateCompletedUtc: '08/02/2014',
-	body: 
+	body:
 	[
 		{
 			name: 'Done',
-			value: 'What was done today?'
+			value: 'Almost everything'
 		},
 		{
 			name: 'In Progress',
-			value: 'What\'s in progress still?'
+			value: 'not so much'
 		}
 	]
 }

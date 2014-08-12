@@ -22,6 +22,8 @@ public class CompanyModel
     @play.data.format.Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date dateCreatedUtc;
 
+    public UserModel owner;
+
     public static List<CompanyModel> GetAll()
     {
         return MorphiaObject.datastore.find(CompanyModel.class).asList();
@@ -30,5 +32,10 @@ public class CompanyModel
     public static CompanyModel Get(ObjectId id)
     {
         return MorphiaObject.datastore.find(CompanyModel.class).filter("_id", id).get();
+    }
+
+    public void Save()
+    {
+        MorphiaObject.datastore.save(this);
     }
 }
