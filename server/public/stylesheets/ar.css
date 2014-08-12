@@ -6,8 +6,12 @@ h4, .h4 {
 	cursor: pointer; 
 }
 
-.starter-template {
-	padding: 40px 15px;
+.main-header {
+    padding: 0 15px;
+    text-align: center;
+}
+
+.page-header {
 	text-align: center;
 }
 
