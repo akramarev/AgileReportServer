@@ -5,22 +5,28 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngClipboard', 'ngAnima
     .config(function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl : '../assets/views/reports.html',
+                templateUrl : globalUrls.assets.views + 'reports.html',
                 controller  : 'reportsController'
             })
-            .when('/view', {
-                templateUrl : '../assets/views/report.html',
+            .when('/view/:id', {
+                templateUrl : globalUrls.assets.views +'report.html',
                 controller  : 'reportController'
             })
             .when('/new', {
-                templateUrl : '../assets/views/new-report.html',
+                templateUrl : globalUrls.assets.views +'new-report.html',
                 controller  : 'newReportController'
             })
     })
-    .controller('reportsController', function($scope) {
-
+    .controller('reportsController', function($scope, $http) {
+        $http.get(globalUrls.api.reports).
+            success(function(data, status, headers, config) {
+                $scope.reports = data;
+            }).
+            error(function(data, status, headers, config) {
+                // log error
+            });
     })
-    .controller('reportController', function($scope) {
+    .controller('reportController', function($scope, $routeParams) {
 
     })
     .controller('newReportController', function($scope) {

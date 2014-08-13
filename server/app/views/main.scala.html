@@ -39,4 +39,16 @@
     <script src="@routes.Assets.at("javascripts/ar.js")"></script>
 
     <script src="@routes.Assets.at("javascripts/ga.js")"></script>
+    <script>
+        var globalUrls = {
+            assets: {
+                js: '@routes.Assets.at("javascripts/")',
+                views: '@routes.Assets.at("views/")'
+            },
+            api: {
+                report: '@routes.ReportService.Get("")',
+                reports: '@routes.ReportsService.Get()'
+            }
+        }
+    </script>
 </html>

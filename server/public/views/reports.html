@@ -8,5 +8,25 @@
     <li><a href="#view">One</a></li>
     <li><a href="#new">New</a></li>
 </ul>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Date Created</th>
+        <th>Date Updated</th>
+        <th>Date Completed</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="report in reports">
+            <td><a href="#view/{{report.id}}">{{report.id}}</a></td>
+            <td>{{report.dateCreatedUtc | date}}</td>
+            <td>{{report.dateUpdatedUtc | date}}</td>
+            <td>{{report.dateCompletedUtc | date}}</td>
+            <td>{{report.status}}</td>
+        </tr>
+    </tbody>
+</table>
 
 
