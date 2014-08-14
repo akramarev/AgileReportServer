@@ -26,8 +26,16 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngClipboard', 'ngAnima
                 // log error
             });
     })
-    .controller('reportController', function($scope, $routeParams) {
+    .controller('reportController', function($scope, $http, $routeParams) {
+        var url = globalUrls.api.report + $routeParams.id;
 
+        $http.get(url).
+            success(function(data, status, headers, config) {
+                $scope.report = data;
+            }).
+            error(function(data, status, headers, config) {
+                // log error
+            });
     })
     .controller('newReportController', function($scope) {
         $scope.date = new Date();

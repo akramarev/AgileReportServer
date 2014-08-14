@@ -4,8 +4,36 @@
     </p>
 </div>
 
-<ul>
-    <li><a href="#">List</a></li>
-    <li><a href="#view">One</a></li>
-    <li><a href="#new">New</a></li>
-</ul>
+<div>
+    <div class="report panel panel-default">
+        <div class="panel-heading">
+            <h3 class="rName panel-title">{{report.user.firstName}} {{report.user.lastName}}'s work report ({{report.dateCreatedUtc | date: 'mediumDate'}})</h3>
+        </div>
+        <div class="panel-body">
+            <div ng-if="model.done.length > 0" class="animate-if">
+                <h4>Done:</h4>
+                <p btf-markdown="model.done"></p>
+            </div>
+            <div ng-if="model.inprogress.length > 0" class="animate-if">
+                <h4>In Progress:</h4>
+                <p btf-markdown="model.inprogress"></p>
+            </div>
+            <div ng-if="model.next.length > 0" class="animate-if">
+                <h4>Next Day:</h4>
+                <p btf-markdown="model.next"></p>
+            </div>
+            <div ng-if="model.reviewed.length > 0" class="animate-if">
+                <h4>Reviewed:</h4>
+                <p btf-markdown="model.reviewed"></p>
+            </div>
+            <div ng-if="model.questions.length > 0" class="animate-if">
+                <h4>Questions:</h4>
+                <p btf-markdown="model.questions"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    {{report}}
+</div>
