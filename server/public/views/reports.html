@@ -6,20 +6,20 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>#</th>
-        <th>Date Created</th>
+        <th>Report Description</th>
+        <th></th>
+        <th>Status</th>
         <th>Last Updated</th>
         <th>Date Completed</th>
-        <th>Status</th>
     </tr>
     </thead>
     <tbody>
         <tr ng-repeat="report in reports">
-            <td><a href="#view/{{report.id}}">{{report.id}}</a></td>
-            <td>{{report.dateCreatedUtc | date}}</td>
+            <td><a href="#view/{{report.id}}">{{report.user.firstName}} {{report.user.lastName}}'s work report ({{report.dateCreatedUtc | date: 'mediumDate'}})</a></td>
+            <td>{{report.id}}</td>
+            <td>{{report.status}}</td>
             <td>{{report.dateUpdatedUtc | date}}</td>
             <td>{{report.dateCompletedUtc | date}}</td>
-            <td>{{report.status}}</td>
         </tr>
     </tbody>
 </table>
