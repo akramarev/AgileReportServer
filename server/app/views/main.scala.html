@@ -30,14 +30,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/report/">Agile Report</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/report/#/new">New</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Log in</a></li>
+                        <li class="active"><a href="/report/">Home</a></li>
+                        <li><a href="/report/#/new">New Report</a></li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +62,8 @@
             },
             api: {
                 report: '@routes.ReportService.Get("")',
-                reports: '@routes.ReportsService.Get()'
+                reports: '@routes.ReportsService.Get()',
+                report_formats: '@routes.ReportFormatsService.Get()'
             }
         }
     </script>

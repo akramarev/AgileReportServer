@@ -1,7 +1,4 @@
-angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngClipboard', 'ngAnimate', 'ngRoute'])
-    .config(['ngClipProvider', function(ngClipProvider) {
-        ngClipProvider.setPath("js/bower_components/zeroclipboard/dist/ZeroClipboard.swf");
-    }])
+angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute'])
     .config(function($routeProvider) {
         $routeProvider
             .when('/', {
@@ -9,76 +6,133 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngClipboard', 'ngAnima
                 controller  : 'reportsController'
             })
             .when('/view/:id', {
-                templateUrl : globalUrls.assets.views +'report.html',
+                templateUrl : globalUrls.assets.views +'edit-report.html',
                 controller  : 'reportController'
             })
             .when('/new', {
-                templateUrl : globalUrls.assets.views +'new-report.html',
+                templateUrl : globalUrls.assets.views +'edit-report.html',
                 controller  : 'newReportController'
             })
     })
-    .controller('reportsController', function($scope, $http) {
-        $http.get(globalUrls.api.reports).
-            success(function(data, status, headers, config) {
-                $scope.reports = data;
-            }).
-            error(function(data, status, headers, config) {
-                // log error
-            });
-    })
-    .controller('reportController', function($scope, $http, $routeParams) {
-        var url = globalUrls.api.report + $routeParams.id;
+    .factory('reportFactory', function($http) {
+        var factory = {};
 
-        $http.get(url).
-            success(function(data, status, headers, config) {
-                $scope.report = data;
-            }).
-            error(function(data, status, headers, config) {
-                // log error
-            });
-    })
-    .controller('newReportController', function($scope) {
-        $scope.date = new Date();
+        factory.reportAction = {
+            add: 'add',
+            edit: 'edit',
+            view: 'view'
+        };
 
-        $scope.model = angular.fromJson(localStorage.model);
-        if(typeof $scope.model == 'undefined')
-        {
-            $scope.model = {
-                done: "1. [RED-123](https://jira.internal.syncplicity.com/browse/RED-123) Fixed. Please review.",
-                inprogress: "* VPN connection problem _resolving_.",
-                next: "* I'm going to call EMC support tomorrow, and ask to check my connection **again**.",
-                reviewed: "* [RED-777](https://jira.internal.syncplicity.com/browse/RED-777) Looks good. Merged."
-                    + "\n * [DB Master PR](https://github.com/syncp/syncp-database/pull/531)",
-                questions: "```NSLog (@\"Some smart question should be here\");```"
-            }
+        factory.reportStatus = {
+                draft: 'Draft',
+                completed: 'Completed'
+        };
+
+        factory.getOneAsync = function(id) {
+            var url = globalUrls.api.report + id;
+            return $http.get(url);
+        };
+
+        factory.getManyAsync = function() {
+            return $http.get(globalUrls.api.reports);
+        };
+
+        factory.createAsync = function(report) {
+            return $http.post(globalUrls.api.reports, report);
         }
 
-        $scope.$watchCollection('model', function(newValue) {
-            localStorage.model = angular.toJson(newValue);
-        });
+        factory.changeAsync = function(report) {
+            return $http.put(globalUrls.api.report + report.id, report);
+        }
 
-        $scope.sendReport = function() {
-            var link = "mailto:manager@localhost"
-                + "?subject=" + encodeURIComponent($('.report .rName').text())
-                + "&body=";
+        return factory;
+    })
+    .factory('reportFormatFactory', function($q, $http) {
+        var factory = {};
 
-            angular.forEach($('.setup .form-group'), function (value, key) {
-                var v = $(value).find('input, textarea').val();
-                if (v.length > 0)
+        factory.getReportStub = function() {
+            return {
+                status: 'Draft',
+                dateCreatedUtc: new Date(),
+                dateUpdatedUtc: new Date(),
+                dateCompletedUtc: new Date(),
+                body: []
+            };
+        };
+
+        factory.getOneAsync = function() {
+            return factory.getManyAsync().then(function(response) {
+                if (response.data.length > 0)
                 {
-                    link += encodeURIComponent("#" + $(value).find('label').text() + "# \n ");
-                    link += encodeURIComponent(v + " \n\n ");
+                    return response.data[0];
                 }
             });
 
-            window.location.href = link;
+            return factory.getManyAsync().success(function(data) {
+                return data[0];
+            });
+        };
+
+        factory.getManyAsync = function() {
+            return $http.get(globalUrls.api.report_formats);
+        };
+
+        return factory;
+    })
+    .controller('reportsController', function($scope, reportFactory) {
+        reportFactory.getManyAsync().success(function(data) {
+            $scope.reports = data;
+        });
+    })
+    .controller('reportController', function($scope, $routeParams, $location, reportFactory) {
+        reportFactory.getOneAsync($routeParams.id).success(function(data) {
+            $scope.report = data;
+
+            $scope.actionMode = $scope.report.status == reportFactory.reportStatus.completed
+                ? reportFactory.reportAction.view
+                : reportFactory.reportAction.edit;
+        });
+
+        $scope.completeReport = function() {
+            $scope.report.status = reportFactory.reportStatus.completed;
+            reportFactory.changeAsync($scope.report).success(function() {
+                $location.path( "/" );
+            });
+        };
+
+        $scope.saveDraftReport = function() {
+            $scope.report.status = reportFactory.reportStatus.draft;
+            reportFactory.changeAsync($scope.report).success(function() {
+                $location.path( "/" );
+            });
+        };
+    })
+    .controller('newReportController', function($scope, $location, reportFactory, reportFormatFactory) {
+        $scope.$watch('report.body', function(newValue) {
+            // TODO add autosave
+        }, true);
+
+        if(typeof $scope.report == 'undefined') {
+            $scope.report = reportFormatFactory.getReportStub();
+
+            reportFormatFactory.getOneAsync().then(function(format) {
+                $scope.report.body = format.body;
+            });
         }
 
-        $scope.getReportHtmlToCopy = function() {
-            return $('.report').html();
-        }
+        $scope.actionMode = reportFactory.reportAction.add;
 
-        $scope.copyReportClick = function() {
-            alert('Copied');
-        }
+        $scope.completeReport = function() {
+            $scope.report.status = reportFactory.reportStatus.completed;
+            reportFactory.createAsync($scope.report).success(function() {
+                $location.path( "/" );
+            });
+        };
+
+        $scope.saveDraftReport = function() {
+            $scope.report.status = reportFactory.reportStatus.draft;
+            reportFactory.createAsync($scope.report).success(function() {
+                $location.path( "/" );
+            });
+        };
     })

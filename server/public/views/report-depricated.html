@@ -1,26 +1,20 @@
 <div class="page-header">
     <p class="lead">
-        Review the report details here.
+        {{report.user.firstName}} {{report.user.lastName}}'s work report ({{report.dateCreatedUtc | date: 'mediumDate'}})
     </p>
+    <p class="text-center"><em>Tip: You can change a report until it approved.</em></p>
 </div>
 
 <div>
     <div class="report panel panel-default">
         <div class="panel-heading">
-            <h3 class="rName panel-title">{{report.user.firstName}} {{report.user.lastName}}'s work report ({{report.dateCreatedUtc | date: 'mediumDate'}})</h3>
+            <h3 class="rName panel-title">Report Status: {{report.status}}</h3>
         </div>
         <div class="panel-body">
-            <dl>
-                <dt>Status:</dt><dd>{{report.status}}</dd>
-            </dl>
             <dl ng-repeat="el in report.body">
                 <dt>{{el.name}}</dt>
                 <dd btf-markdown="el.value"></dd>
             </dl>
         </div>
     </div>
-</div>
-
-<div>
-    {{report}}
 </div>

@@ -24,6 +24,8 @@ public class CompanyModel
 
     public UserModel owner;
 
+    public ReportFormatModel reportFormat;
+
     public static List<CompanyModel> GetAll()
     {
         return MorphiaObject.datastore.find(CompanyModel.class).asList();

@@ -1,4 +1,5 @@
 import java.net.UnknownHostException;
+import java.util.TimeZone;
 
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
@@ -12,6 +13,10 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(play.Application arg0) {
         super.beforeStart(arg0);
+
+        System.setProperty("user.timezone", "GMT");
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+
         Logger.debug("** onStart **");
         try {
             MorphiaObject.mongo = new Mongo("127.0.0.1", 27017);

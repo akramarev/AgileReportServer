@@ -11,27 +11,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity("users")
-public class UserModel
+@Entity("report_formats")
+public class ReportFormatModel
 {
     @Id
     @JsonSerialize(using = ObjectIdSerializer.class)
     public ObjectId id;
 
-    public String email;
-    public String firstName;
-    public String lastName;
+    public CompanyModel company;
 
     @play.data.format.Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date dateCreatedUtc;
 
-    public CompanyModel company;
+    @play.data.format.Formats.DateTime(pattern = "yyyy-MM-dd")
+    public Date dateUpdatedUtc;
 
-    public List<UserRole> roles = new ArrayList<>();
+    public List<ReportBodyElement> body = new ArrayList<>();
 
-    public static UserModel Get(ObjectId id)
+    public static List<ReportFormatModel> GetMany(ObjectId companyId)
     {
-        return MorphiaObject.datastore.find(UserModel.class).filter("_id", id).get();
+        return MorphiaObject.datastore.find(ReportFormatModel.class).filter("company._id", companyId).asList();
     }
 
     public void Save()

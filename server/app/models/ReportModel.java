@@ -33,9 +33,12 @@ public class ReportModel
 
     public List<ReportBodyElement> body = new ArrayList<>();
 
-    public static List<ReportModel> GetAll()
+    public static List<ReportModel> GetMany(ObjectId userId)
     {
-        return MorphiaObject.datastore.find(ReportModel.class).asList();
+        return MorphiaObject.datastore.find(ReportModel.class)
+                .filter("user._id", userId)
+                .order("-dateUpdatedUtc")
+                .asList();
     }
 
     public static ReportModel Get(ObjectId id)

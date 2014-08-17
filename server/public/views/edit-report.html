@@ -1,0 +1,35 @@
+<div class="page-header">
+    <p class="lead" ng-switch="actionMode">
+        <span ng-switch-when="add">Use this page to compile daily report.</span>
+        <span ng-switch-when="edit">Use this page to adjust the report.</span>
+        <span ng-switch-when="view">Use this page to review the report.</span>
+        <span ng-switch-default>Use this page to review daily report.</span>
+    </p>
+    <p class="text-center"><em><a href="http://support.mashery.com/docs/read/customizing_your_portal/Markdown_Cheat_Sheet" target="_blank">Markdown</a> is your friend.</em></p>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 setup" ng-if="actionMode == 'add' || actionMode == 'edit'">
+        <div ng-repeat="el in report.body" class="form-group">
+            <label for="el{{$index}}">{{el.name}}:</label>
+            <textarea id="el{{$index}}" class="form-control" rows="4" ng-model="el.value" placeholder="{{el.placeholder}}"></textarea>
+        </div>
+    </div>
+    <div ng-class="{'col-sm-6': (actionMode == 'add' || actionMode == 'edit')}">
+        <div class="report panel panel-default">
+            <div class="panel-heading">
+                <h3 class="rName panel-title">My work report ({{report.dateCreatedUtc | date: 'mediumDate'}})</h3>
+            </div>
+            <div class="panel-body">
+                <dl ng-repeat="el in report.body" ng-if="el.value.length > 0" class="animate-if">
+                    <dt>{{el.name}}</dt>
+                    <dd btf-markdown="el.value"></dd>
+                </dl>
+            </div>
+        </div>
+        <div ng-if="actionMode == 'add' || actionMode == 'edit'">
+            <button type="button" class="btn btn-default" ng-click="completeReport()">Complete Report</button>
+            <button type="button" class="btn btn-default" ng-click="saveDraftReport()">Save Draft</button>
+        </div>
+    </div>
+</div>
