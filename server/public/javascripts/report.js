@@ -24,8 +24,9 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute']
         };
 
         factory.reportStatus = {
-                draft: 'Draft',
-                completed: 'Completed'
+            draft: 'Draft',
+            completed: 'Completed',
+            archived: 'Archived'
         };
 
         factory.getOneAsync = function(id) {
@@ -43,6 +44,10 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute']
 
         factory.changeAsync = function(report) {
             return $http.put(globalUrls.api.report + report.id, report);
+        }
+
+        factory.deleteAsync = function(report) {
+            return $http.delete(globalUrls.api.report + report.id);
         }
 
         return factory;
@@ -102,6 +107,19 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute']
 
         $scope.saveDraftReport = function() {
             $scope.report.status = reportFactory.reportStatus.draft;
+            reportFactory.changeAsync($scope.report).success(function() {
+                $location.path( "/" );
+            });
+        };
+
+        $scope.deleteDraftReport = function() {
+            reportFactory.deleteAsync($scope.report).success(function() {
+                $location.path( "/" );
+            });
+        };
+
+        $scope.archiveReport = function() {
+            $scope.report.status = reportFactory.reportStatus.archived;
             reportFactory.changeAsync($scope.report).success(function() {
                 $location.path( "/" );
             });

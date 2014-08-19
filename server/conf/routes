@@ -11,6 +11,7 @@ GET         /assets/*file                   controllers.Assets.at(path="/public"
 
 GET         /api/1.1/report/:id             controllers.ReportService.Get(id)
 PUT         /api/1.1/report/:id             controllers.ReportService.Put(id)
+DELETE      /api/1.1/report/:id             controllers.ReportService.Delete(id)
 
 GET         /api/1.1/reports/               controllers.ReportsService.Get()
 POST        /api/1.1/reports/               controllers.ReportsService.Post()

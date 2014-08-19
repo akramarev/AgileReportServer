@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.ReportModel;
+import models.ReportStatus;
 import org.bson.types.ObjectId;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -43,5 +44,24 @@ public class ReportService extends Controller
         report.Save();
 
         return ok(Json.toJson(report));
+    }
+
+    public static Result Delete(String id)
+    {
+        ReportModel report = ReportModel.Get(new ObjectId(id));
+        if (report != null)
+        {
+            if (report.status != ReportStatus.Draft)
+            {
+                return badRequest("Not Draft");
+            }
+
+            report.Delete();
+            return ok();
+        }
+        else
+        {
+            return notFound();
+        }
     }
 }

@@ -28,8 +28,18 @@
             </div>
         </div>
         <div ng-if="actionMode == 'add' || actionMode == 'edit'">
-            <button type="button" class="btn btn-default" ng-click="completeReport()">Complete Report</button>
-            <button type="button" class="btn btn-default" ng-click="saveDraftReport()">Save Draft</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-click="deleteDraftReport()">Delete Draft</button>
+            </div>
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default" ng-click="saveDraftReport()">Save Draft</button>
+                <button type="button" class="btn btn-primary" ng-click="completeReport()">Complete Report</button>
+            </div>
+        </div>
+        <div ng-if="actionMode == 'view'">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary" ng-click="archiveReport()">Archive Report</button>
+            </div>
         </div>
     </div>
 </div>

@@ -37,6 +37,7 @@ public class ReportModel
     {
         return MorphiaObject.datastore.find(ReportModel.class)
                 .filter("user._id", userId)
+                .filter("status !=", ReportStatus.Archived.toString())
                 .order("-dateUpdatedUtc")
                 .asList();
     }
@@ -49,5 +50,10 @@ public class ReportModel
     public void Save()
     {
         MorphiaObject.datastore.save(this);
+    }
+
+    public void Delete()
+    {
+        MorphiaObject.datastore.delete(this);
     }
 }
