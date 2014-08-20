@@ -1,7 +1,6 @@
 <div class="page-header">
     <p class="lead" ng-switch="actionMode">
-        <span ng-switch-when="add">Use this page to compile daily report.</span>
-        <span ng-switch-when="edit">Use this page to adjust the report.</span>
+        <span ng-switch-when="edit">Use this page to compile or adjust the report.</span>
         <span ng-switch-when="view">Use this page to review the report.</span>
         <span ng-switch-default>Use this page to review daily report.</span>
     </p>
@@ -9,13 +8,13 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6 setup" ng-if="actionMode == 'add' || actionMode == 'edit'">
+    <div class="col-sm-6 setup" ng-if="actionMode == 'edit'">
         <div ng-repeat="el in report.body" class="form-group">
             <label for="el{{$index}}">{{el.name}}:</label>
             <textarea id="el{{$index}}" class="form-control" rows="4" ng-model="el.value" placeholder="{{el.placeholder}}"></textarea>
         </div>
     </div>
-    <div ng-class="{'col-sm-6': (actionMode == 'add' || actionMode == 'edit')}">
+    <div ng-class="{'col-sm-6': (actionMode == 'edit')}">
         <div class="report panel panel-default">
             <div class="panel-heading">
                 <h3 class="rName panel-title">My work report ({{report.dateCreatedUtc | date: 'mediumDate'}})</h3>
@@ -27,14 +26,9 @@
                 </dl>
             </div>
         </div>
-        <div ng-if="actionMode == 'add' || actionMode == 'edit'">
-            <div class="btn-group">
+        <div ng-if="actionMode == 'edit'">
                 <button type="button" class="btn btn-default" ng-click="deleteDraftReport()">Delete Draft</button>
-            </div>
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default" ng-click="saveDraftReport()">Save Draft</button>
-                <button type="button" class="btn btn-primary" ng-click="completeReport()">Complete Report</button>
-            </div>
+                <button type="button" class="btn btn-primary pull-right" ng-click="completeReport()">Complete Report</button>
         </div>
         <div ng-if="actionMode == 'view'">
             <div class="btn-group pull-right">

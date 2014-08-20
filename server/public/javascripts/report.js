@@ -11,7 +11,7 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute']
             })
             .when('/new', {
                 templateUrl : globalUrls.assets.views +'edit-report.html',
-                controller  : 'newReportController'
+                controller  : 'reportController'
             })
     })
     .factory('reportFactory', function($http) {
@@ -84,29 +84,92 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute']
 
         return factory;
     })
+    .factory('intervalFactory', function () {
+        var factory = {
+            isSet: false,
+            interval: 5000,
+            f: function() {}
+        };
+
+        factory.set = function()
+        {
+            factory.isSet = true;
+        };
+
+        factory.reset = function()
+        {
+            factory.isSet = false;
+        };
+
+        factory.init = function(f, interval) {
+            factory.interval = typeof interval !== 'undefined' ? interval : factory.interval;
+            factory.f = f;
+
+            window.setInterval(function() {
+                if (factory.isSet) {
+                    factory.f();
+                    factory.reset();
+                }
+            }, factory.interval);
+        };
+
+        return factory;
+    })
     .controller('reportsController', function($scope, reportFactory) {
         reportFactory.getManyAsync().success(function(data) {
             $scope.reports = data;
         });
     })
-    .controller('reportController', function($scope, $routeParams, $location, reportFactory) {
-        reportFactory.getOneAsync($routeParams.id).success(function(data) {
-            $scope.report = data;
+    .controller('reportController', function($scope, $routeParams, $location, reportFactory, reportFormatFactory, intervalFactory) {
+        var init = function() {
+            if (typeof $routeParams.id  == 'undefined') {
+                $scope.report = reportFormatFactory.getReportStub();
 
+                reportFormatFactory.getOneAsync()
+                    .then(function(format) {
+                        $scope.report.body = format.body;
+                        $scope.report.status = reportFactory.reportStatus.draft;
+
+                        reportFactory.createAsync($scope.report).success(function(data) {
+                            $scope.report = data;
+                            setReportAction();
+
+                            intervalFactory.init(autoSave);
+                            $scope.$watch('report.body', intervalFactory.set, true);
+                        });
+                    })
+            }
+            else
+            {
+                reportFactory.getOneAsync($routeParams.id).success(function(data) {
+                    $scope.report = data;
+                    setReportAction();
+
+                    intervalFactory.init(autoSave);
+                    $scope.$watch('report.body', intervalFactory.set, true);
+                });
+            }
+        };
+
+        var autoSave = function()
+        {
+            if($scope.report.status == reportFactory.reportStatus.draft)
+            {
+                reportFactory.changeAsync($scope.report);
+            }
+        };
+
+        var setReportAction = function()
+        {
             $scope.actionMode = $scope.report.status == reportFactory.reportStatus.completed
                 ? reportFactory.reportAction.view
                 : reportFactory.reportAction.edit;
-        });
+        };
+
+        init();
 
         $scope.completeReport = function() {
             $scope.report.status = reportFactory.reportStatus.completed;
-            reportFactory.changeAsync($scope.report).success(function() {
-                $location.path( "/" );
-            });
-        };
-
-        $scope.saveDraftReport = function() {
-            $scope.report.status = reportFactory.reportStatus.draft;
             reportFactory.changeAsync($scope.report).success(function() {
                 $location.path( "/" );
             });
@@ -121,35 +184,6 @@ angular.module('ar', ['ui.bootstrap', 'btford.markdown', 'ngAnimate', 'ngRoute']
         $scope.archiveReport = function() {
             $scope.report.status = reportFactory.reportStatus.archived;
             reportFactory.changeAsync($scope.report).success(function() {
-                $location.path( "/" );
-            });
-        };
-    })
-    .controller('newReportController', function($scope, $location, reportFactory, reportFormatFactory) {
-        $scope.$watch('report.body', function(newValue) {
-            // TODO add autosave
-        }, true);
-
-        if(typeof $scope.report == 'undefined') {
-            $scope.report = reportFormatFactory.getReportStub();
-
-            reportFormatFactory.getOneAsync().then(function(format) {
-                $scope.report.body = format.body;
-            });
-        }
-
-        $scope.actionMode = reportFactory.reportAction.add;
-
-        $scope.completeReport = function() {
-            $scope.report.status = reportFactory.reportStatus.completed;
-            reportFactory.createAsync($scope.report).success(function() {
-                $location.path( "/" );
-            });
-        };
-
-        $scope.saveDraftReport = function() {
-            $scope.report.status = reportFactory.reportStatus.draft;
-            reportFactory.createAsync($scope.report).success(function() {
                 $location.path( "/" );
             });
         };
