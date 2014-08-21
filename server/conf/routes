@@ -3,17 +3,18 @@
 # ~~~~
 
 # Home page
-GET         /                               controllers.ReportPage.index()
-GET         /report/                        controllers.ReportPage.index()
+GET           /                               controllers.ReportPage.index()
+GET           /report/                        controllers.ReportPage.index()
+GET           /login/                         controllers.LoginPage.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                   controllers.Assets.at(path="/public", file)
+GET           /assets/*file                   controllers.Assets.at(path="/public", file)
 
-GET         /api/1.1/report/:id             controllers.ReportService.Get(id)
-PUT         /api/1.1/report/:id             controllers.ReportService.Put(id)
-DELETE      /api/1.1/report/:id             controllers.ReportService.Delete(id)
+GET           /api/1.1/report/:id             controllers.ReportService.Get(id)
+PUT           /api/1.1/report/:id             controllers.ReportService.Put(id)
+DELETE        /api/1.1/report/:id             controllers.ReportService.Delete(id)
 
-GET         /api/1.1/reports/               controllers.ReportsService.Get()
-POST        /api/1.1/reports/               controllers.ReportsService.Post()
+GET           /api/1.1/reports/               controllers.ReportsService.Get()
+POST          /api/1.1/reports/               controllers.ReportsService.Post()
 
-GET         /api/1.1/report_formats/        controllers.ReportFormatsService.Get()
+GET           /api/1.1/report_formats/        controllers.ReportFormatsService.Get()

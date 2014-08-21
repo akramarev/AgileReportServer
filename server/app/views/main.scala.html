@@ -10,35 +10,17 @@
 
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
-        <!-- Bootstrap -->
         <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet" type="text/css">
         <link href="@routes.Assets.at("stylesheets/ar.css")" rel="stylesheet" type="text/css">
+        <link href="@routes.Assets.at("stylesheets/login.css")" rel="stylesheet" type="text/css">
     </head>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
-    <script src="@routes.Assets.at("javascripts/ui-bootstrap-tpls-0.11.0.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js")"></script>
     <script src="@routes.Assets.at("javascripts/bower_components/angular-route/angular-route.min.js")"></script>
 
     <body>
-        <div class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="/report/">Home</a></li>
-                        <li><a href="/report/#/new">New Report</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         @content
     </body>
 
@@ -46,12 +28,7 @@
     <script src="@routes.Assets.at("javascripts/bower_components/showdown/compressed/showdown.js")"></script>
     <script src="@routes.Assets.at("javascripts/bower_components/angular-markdown-directive/markdown.js")"></script>
 
-    <script src="@routes.Assets.at("javascripts/bower_components/zeroclipboard/dist/ZeroClipboard.min.js")"></script>
-    <script src="@routes.Assets.at("javascripts/bower_components/ng-clip/dest/ng-clip.js")"></script>
-
     <script src="@routes.Assets.at("javascripts/bower_components/angular-animate/angular-animate.min.js")"></script>
-
-    <script src="@routes.Assets.at("javascripts/ar.js")"></script>
 
     <script src="@routes.Assets.at("javascripts/ga.js")"></script>
     <script>
