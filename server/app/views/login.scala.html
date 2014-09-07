@@ -1,16 +1,16 @@
 @main("Sign in") {
     <div class="container" ng-controller="loginController">
-        <form name="loginForm" class="form-signin" novalidate>
+        <form name="loginForm" method="POST" class="form-signin" novalidate>
             <div class="page-header">
                 <p class="lead">
                     Agile Report
                 </p>
             </div>
             <div class="form-group" show-errors>
-                <input type="email" name="email" ng-model="user.email" class="form-control" placeholder="Email" required autofocus="">
+                <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email" required autofocus="">
             </div>
             <div class="form-group" show-errors>
-                <input type="password" name="password" ng-model="user.password" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" ng-model="password" class="form-control" placeholder="Password" required>
             </div>
 
             <button class="btn btn-lg btn-primary btn-block" ng-click="login()" type="submit">Sign in</button>

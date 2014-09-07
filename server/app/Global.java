@@ -8,6 +8,8 @@ import assets.MorphiaObject;
 import play.GlobalSettings;
 import play.Logger;
 
+import models.*;
+
 public class Global extends GlobalSettings {
 
     @Override
@@ -25,6 +27,14 @@ public class Global extends GlobalSettings {
         }
         MorphiaObject.morphia = new Morphia();
         MorphiaObject.datastore = MorphiaObject.morphia.createDatastore(MorphiaObject.mongo, "ar");
+
+        // http://stackoverflow.com/questions/17763156/index-annotation-with-morphia-does-not-work
+        MorphiaObject.morphia
+                .map(UserModel.class)
+                .map(CompanyModel.class)
+                .map(ReportModel.class)
+                .map(TokenModel.class);
+
         MorphiaObject.datastore.ensureIndexes();
         MorphiaObject.datastore.ensureCaps();
 

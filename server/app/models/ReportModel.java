@@ -5,6 +5,7 @@ import assets.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.Indexed;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ReportModel
 
     public UserModel user;
 
+    @Indexed
     public ReportStatus status;
 
     @play.data.format.Formats.DateTime(pattern = "yyyy-MM-dd")

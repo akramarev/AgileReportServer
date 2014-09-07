@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   javaWs,
   "com.google.code.morphia" % "morphia" % "0.99",
   "org.mongodb" % "mongo-java-driver" % "2.7.3",
-  "com.google.code.morphia" % "morphia-logging-slf4j" % "0.99"
+  "com.google.code.morphia" % "morphia-logging-slf4j" % "0.99",
+  "org.mindrot" % "jbcrypt" % "0.3m"
 )
 
 resolvers ++= Seq(

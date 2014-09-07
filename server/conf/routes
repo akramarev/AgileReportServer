@@ -2,14 +2,16 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# Pages
 GET           /                               controllers.ReportPage.index()
 GET           /report/                        controllers.ReportPage.index()
-GET           /login/                         controllers.LoginPage.index()
+
+GET           /login/                         controllers.LoginPage.Get()
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                   controllers.Assets.at(path="/public", file)
 
+# API
 GET           /api/1.1/report/:id             controllers.ReportService.Get(id)
 PUT           /api/1.1/report/:id             controllers.ReportService.Put(id)
 DELETE        /api/1.1/report/:id             controllers.ReportService.Delete(id)
@@ -18,3 +20,5 @@ GET           /api/1.1/reports/               controllers.ReportsService.Get()
 POST          /api/1.1/reports/               controllers.ReportsService.Post()
 
 GET           /api/1.1/report_formats/        controllers.ReportFormatsService.Get()
+
+POST           /api/1.1/tokens/                controllers.TokensService.Post()

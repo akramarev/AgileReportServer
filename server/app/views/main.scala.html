@@ -24,6 +24,8 @@
         @content
     </body>
 
+    <script src="@routes.Assets.at("javascripts/bower_components/angular-cookies/angular-cookies.min.js")"></script>
+
     <script src="@routes.Assets.at("javascripts/bower_components/angular-sanitize/angular-sanitize.min.js")"></script>
     <script src="@routes.Assets.at("javascripts/bower_components/showdown/compressed/showdown.js")"></script>
     <script src="@routes.Assets.at("javascripts/bower_components/angular-markdown-directive/markdown.js")"></script>
@@ -40,7 +42,8 @@
             api: {
                 report: '@routes.ReportService.Get("")',
                 reports: '@routes.ReportsService.Get()',
-                report_formats: '@routes.ReportFormatsService.Get()'
+                report_formats: '@routes.ReportFormatsService.Get()',
+                tokens: '@routes.TokensService.Post()'
             }
         }
     </script>

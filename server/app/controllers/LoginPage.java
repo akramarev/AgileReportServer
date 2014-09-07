@@ -6,8 +6,7 @@ import views.html.login;
 
 public class LoginPage extends Controller {
 
-    public static Result index() {
+    public static Result Get() {
         return ok(login.render());
     }
-
 }
